@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --primary: #ff3e00;
+  --primary: #6D28D9;
   --secondary: #676778;
   --background: #13151c;
   --card-bg: #1c1f2a;
@@ -28,11 +28,11 @@ body {
 }
 
 .btn-primary {
-  @apply bg-[#ff3e00] text-white font-semibold py-2 px-4 rounded-lg 
-         hover:bg-[#ff5722] transition-all duration-300;
+  @apply bg-[#6D28D9] text-white font-semibold py-2 px-4 rounded-lg 
+         hover:bg-[#6D28D9E6] transition-all duration-300;
 }
 
 .input-amount {
   @apply bg-[#2a2d3a] border border-gray-700 rounded-lg px-4 py-2 
-         text-white focus:outline-none focus:border-[#ff3e00];
+         text-white focus:outline-none focus:border-[#6D28D9];
 }
