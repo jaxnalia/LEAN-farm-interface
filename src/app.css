@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --primary: #ff3e00;
+  --secondary: #676778;
+  --background: #13151c;
+  --card-bg: #1c1f2a;
+}
+
+body {
+  margin: 0;
+  background-color: var(--background);
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+}
+
+.farm-card {
+  background: var(--card-bg);
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+.farm-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+  @apply bg-[#ff3e00] text-white font-semibold py-2 px-4 rounded-lg 
+         hover:bg-[#ff5722] transition-all duration-300;
+}
+
+.input-amount {
+  @apply bg-[#2a2d3a] border border-gray-700 rounded-lg px-4 py-2 
+         text-white focus:outline-none focus:border-[#ff3e00];
+}
