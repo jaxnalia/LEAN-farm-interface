@@ -247,7 +247,7 @@
       <div class="text-right">
         <div class="flex items-center gap-4 mb-1">
           <span class="text-yellow-400 font-semibold">{weight}% Weight</span>
-          <span class="text-2xl font-bold text-[#43e650]">{apr.toFixed(2)}% APR</span>
+          <span class="text-2xl font-bold text-[#ffffff]">{apr.toFixed(2)}% APR</span>
         </div>
         <p class="text-gray-400">Liquidity: ${tvl.toLocaleString(undefined, { maximumFractionDigits: 2 })}</p>
       </div>
