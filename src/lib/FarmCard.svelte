@@ -347,7 +347,7 @@
             {/if}
           </div>
           <button 
-            class="bg-[#2a2d3a] text-white font-semibold py-2 px-4 rounded-lg hover:bg-[#353849] w-full"
+            class="bg-[#2a2d3a] transition-all duration-300 text-white font-semibold py-2 px-4 rounded-lg hover:bg-[#353849] w-full"
             on:click={handleUnstake}
             disabled={!wallet || !unstakeAmount || parseFloat(unstakeAmount) <= 0}
           >
