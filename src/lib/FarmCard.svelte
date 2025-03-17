@@ -302,7 +302,7 @@
             />
             {#if wallet}
               <button 
-                class="absolute right-2 top-0 h-full flex items-center text-white hover:text-[#ff3e00] transition-colors"
+                class="absolute right-2 top-0 h-full flex items-center text-white hover:underline transition-colors"
                 on:click={setMaxStakeBalance}
               >
                 Balance: {parseFloat(lpBalance).toFixed(4)}
@@ -339,7 +339,7 @@
             />
             {#if wallet}
               <button 
-                class="absolute right-2 top-0 h-full flex items-center text-white hover:text-[#ff3e00] transition-colors"
+                class="absolute right-2 top-0 h-full flex items-center text-white hover:underline transition-colors"
                 on:click={setMaxUnstakeBalance}
               >
                 Staked: {parseFloat(userStaked).toFixed(4)}
