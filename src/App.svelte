@@ -28,7 +28,7 @@
   // Token prices in USD (you would typically get these from an oracle or price feed)
   const TOKEN_PRICES = {
     'LEAN': 0.001382,  // Example price
-    'PLSX': 0.00003915,  // Example price
+    'PLSX': 0.00002402,  // Example price
     'LIT': 0.0000079   // Example price
   };
 
@@ -42,7 +42,7 @@
       tvl: 0,
       apr: 0,
       earned: 0,
-      staked: 123.45,
+      staked: 0,
       logo1: 'https://raw.githubusercontent.com/jaxnalia/lean-frontend-master/refs/heads/main/src/lib/images/lean.png',
       logo2: 'https://raw.githubusercontent.com/jaxnalia/lean-frontend-master/refs/heads/main/src/lib/images/plsx.png',
       poolId: 0,
@@ -53,7 +53,7 @@
       tvl: 0,
       apr: 0,
       earned: 0,
-      staked: 45.67,
+      staked: 0,
       logo1: 'https://raw.githubusercontent.com/jaxnalia/lean-frontend-master/refs/heads/main/src/lib/images/lit.png',
       logo2: 'https://raw.githubusercontent.com/jaxnalia/lean-frontend-master/refs/heads/main/src/lib/images/plsx.png',
       poolId: 1,
@@ -64,7 +64,7 @@
       tvl: 0,
       apr: 0,
       earned: 0,
-      staked: 67.89,
+      staked: 0,
       logo1: 'https://raw.githubusercontent.com/jaxnalia/lean-frontend-master/refs/heads/main/src/lib/images/lit.png',
       logo2: 'https://raw.githubusercontent.com/jaxnalia/lean-frontend-master/refs/heads/main/src/lib/images/lean.png',
       poolId: 2,
