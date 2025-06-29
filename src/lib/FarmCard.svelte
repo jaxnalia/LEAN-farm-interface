@@ -125,6 +125,7 @@
       await checkAllowance();
       approving = false;
       toast.success('Tokens approved successfully', { id: toastId });
+      await handleStake(); // Automatically stake after approval
       return true;
     } catch (error) {
       approving = false;
@@ -235,6 +236,8 @@
   });
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="farm-card p-6 mb-4 cursor-pointer" on:click={toggleExpand}>
   <div class="flex justify-between items-center">
     <div class="flex items-center">
@@ -243,15 +246,15 @@
         <img src={logo2} alt="" class="absolute w-8 h-8 right-0 bottom-0" />
       </div>
       <div class="ml-4">
-        <h3 class="text-xl font-bold">{pair}</h3>
+        <h3 class="text-lg font-bold">{pair}</h3>
         <p class="text-gray-400">Earn LIT</p>
       </div>
     </div>
     <div class="flex items-center gap-4">
       <div class="text-right">
-        <div class="flex items-center gap-4 mb-1">
-          <span class="text-yellow-400 font-semibold">{weight}% Weight</span>
-          <span class="text-2xl font-bold text-[#ffffff]">{apr.toFixed(2)}% APR</span>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="text-yellow-400 border border-yellow-400 px-1 rounded-md font-semibold">{weight}x</span>
+          <span class="text-xl font-bold text-[#ffffff]">{apr.toFixed(2)}% APY</span>
         </div>
         <p class="text-gray-400">TVL: ${tvl.toLocaleString(undefined, { maximumFractionDigits: 2 })}</p>
       </div>
