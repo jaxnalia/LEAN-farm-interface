@@ -114,9 +114,12 @@
       const signer = provider.getSigner();
       
       const lpToken = new ethers.Contract(lpAddress, LP_TOKEN_ABI, signer);
-      const amount = ethers.utils.parseEther(stakeAmount);
       
-      const tx = await lpToken.approve(MASTERCHEF_ADDRESS, amount);
+      // Approve a large amount (max uint256) for convenience, or the specific amount
+      // Using max approval to avoid needing to approve again for future transactions
+      const maxAmount = ethers.constants.MaxUint256;
+      
+      const tx = await lpToken.approve(MASTERCHEF_ADDRESS, maxAmount);
       await tx.wait();
       
       await checkAllowance();
@@ -220,7 +223,8 @@
     }
   }
 
-  $: needsApproval = wallet && stakeAmount && parseFloat(stakeAmount) > parseFloat(allowance);
+  // Check if approval is needed - compare the stake amount with current allowance
+  $: needsApproval = wallet && stakeAmount && parseFloat(stakeAmount) > 0 && parseFloat(stakeAmount) > parseFloat(allowance);
 
   onMount(() => {
     if (wallet && isExpanded) {
