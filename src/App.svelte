@@ -25,11 +25,15 @@
     "function totalSupply() view returns (uint256)"
   ];
 
-  // Token prices in USD (you would typically get these from an oracle or price feed)
+   // LEAN/WPLS pair address for price calculation
+  const LEAN_WPLS_PAIR = '0x9961c2652B301c4A25256Db05316d2be11CEbaB1';
+
+  // Token prices in USD - will be updated from CoinGecko and pair ratios
   const TOKEN_PRICES = {
-    'LEAN': 0.001382,  // Example price
-    'PLSX': 0.00002402,  // Example price
-    'LIT': 0.0000079   // Example price
+    'LEAN': 0.000000,  // Will be calculated from LEAN/WPLS pair
+    'PLSX': 0.00000000,  // Will be updated from CoinGecko
+    'LIT': 0.0000079,   // Static price for now
+    'WPLS': 0.00000     // Will be updated from CoinGecko
   };
 
   // Reward constants
@@ -89,6 +93,56 @@
       description: 'LEAN Farming Interface'
     }
   });
+
+  async function fetchTokenPrices() {
+    try {
+      // Fetch PLSX and WPLS prices from CoinGecko
+      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=pulsechain,pulsex&vs_currencies=usd');
+      const data = await response.json();
+      
+      if (data.pulsechain?.usd) {
+        TOKEN_PRICES.WPLS = data.pulsechain.usd;
+      }
+      
+      if (data.pulsex?.usd) {
+        TOKEN_PRICES.PLSX = data.pulsex.usd;
+      }
+      
+      // Calculate LEAN price from LEAN/WPLS pair
+      await calculateLeanPrice();
+      
+      console.log('Updated token prices:', TOKEN_PRICES);
+    } catch (error) {
+      console.error('Error fetching token prices from CoinGecko:', error);
+      // Keep using fallback prices if API fails
+    }
+  }
+
+  async function calculateLeanPrice() {
+    try {
+      const provider = new ethers.providers.JsonRpcProvider('https://rpc.pulsechain.com');
+      const leanWplsPair = new ethers.Contract(LEAN_WPLS_PAIR, LP_TOKEN_ABI, provider);
+      
+      // Get reserves from LEAN/WPLS pair
+      const reserves = await leanWplsPair.getReserves();
+      
+      // Assuming LEAN is token0 and WPLS is token1 (you may need to verify this)
+      // If reversed, swap reserve0 and reserve1 in the calculation
+      const leanReserve = ethers.utils.formatEther(reserves[0]); // LEAN reserve
+      const wplsReserve = ethers.utils.formatEther(reserves[1]); // WPLS reserve
+      
+      // Calculate LEAN price in WPLS terms
+      const leanPriceInWpls = parseFloat(wplsReserve) / parseFloat(leanReserve);
+      
+      // Calculate LEAN price in USD
+      TOKEN_PRICES.LEAN = leanPriceInWpls * TOKEN_PRICES.WPLS;
+      
+      console.log(`LEAN/WPLS ratio: ${leanPriceInWpls}, LEAN USD price: $${TOKEN_PRICES.LEAN}`);
+    } catch (error) {
+      console.error('Error calculating LEAN price from pair:', error);
+      // Keep using fallback LEAN price if calculation fails
+    }
+  }
 
   async function calculatePoolStats(farm) {
     try {
@@ -194,14 +248,27 @@
   // Refresh stats periodically
   let statsInterval: number;
   let earnedInterval: number;
+    let priceInterval: number;
 
   onMount(() => {
-    fetchPoolWeights();
-    statsInterval = setInterval(fetchPoolWeights, 30000); // Refresh stats every 30 seconds
+    // Initial data fetch
+    fetchTokenPrices().then(() => {
+      fetchPoolWeights();
+    });
+    
+    // Set up intervals
+    statsInterval = setInterval(() => {
+      fetchTokenPrices().then(() => {
+        fetchPoolWeights();
+      });
+    }, 30000); // Refresh stats every 30 seconds
+    
+    priceInterval = setInterval(fetchTokenPrices, 300000); // Refresh prices every 5 minutes
 
     return () => {
       if (statsInterval) clearInterval(statsInterval);
       if (earnedInterval) clearInterval(earnedInterval);
+      if (priceInterval) clearInterval(priceInterval);
     };
   });
 

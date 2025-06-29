@@ -253,7 +253,7 @@
           <span class="text-yellow-400 font-semibold">{weight}% Weight</span>
           <span class="text-2xl font-bold text-[#ffffff]">{apr.toFixed(2)}% APR</span>
         </div>
-        <p class="text-gray-400">Liquidity: ${tvl.toLocaleString(undefined, { maximumFractionDigits: 2 })}</p>
+        <p class="text-gray-400">TVL: ${tvl.toLocaleString(undefined, { maximumFractionDigits: 2 })}</p>
       </div>
       <svg 
         class="w-6 h-6 text-gray-400 transition-transform duration-300 {isExpanded ? 'rotate-180' : ''}" 
