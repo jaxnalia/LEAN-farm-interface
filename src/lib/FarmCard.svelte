@@ -22,7 +22,6 @@
   let userStaked = '0.00';
   let allowance = '0';
   let approving = false;
-  let harvesting = false;
   
   const LP_TOKEN_ABI = [
     "function balanceOf(address owner) view returns (uint256)",
@@ -185,7 +184,6 @@
     const toastId = toast.loading('Harvesting rewards...');
     try {
       if (!wallet || poolId === undefined) return;
-      harvesting = true;
       const provider = new ethers.providers.Web3Provider(wallet.provider);
       const signer = provider.getSigner();
       
@@ -193,10 +191,8 @@
       
       const tx = await masterChef.deposit(poolId, 0);
       await tx.wait();
-      harvesting = false;
       toast.success('Rewards harvested successfully', { id: toastId });
     } catch (error) {
-      harvesting = false;
       handleError(error, toastId);
     }
   }
@@ -287,10 +283,10 @@
           <p class="text-xl font-bold">{earned.toFixed(4)} LIT</p>
           <button 
             class="btn-primary mt-2 w-full" 
-            disabled={harvesting}
+            disabled={!wallet}
             on:click={handleHarvest}
           >
-            {harvesting ? 'Harvesting...' : 'Harvest'}
+            Harvest
           </button>
         </div>
         <div>
