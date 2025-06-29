@@ -1,4 +1,5 @@
 <script lang="ts">
+  // @ts-nocheck
   import FarmCard from './lib/FarmCard.svelte';
   import Navbar from './lib/Navbar.svelte';
   import { onMount } from 'svelte';
@@ -325,5 +326,15 @@
       {/each}
       
     </div>
+
+    <div class="text-center mt-12">
+      <p class="text-gray-400">Made with ❤️ by <a class="hover:underline" href=" http://x.com/bigjaxcapital">@bigjaxcapital</a></p>
+      <p class="text-gray-400">
+        <a class="hover:underline" href="https://x.com/pls_lean">X</a> • 
+        <a class="hover:underline" href="https://scan.pulsechainfoundation.org/#/address/0xbE7f4fFfDe4241cA25eb27616aE3974aF0a023fD?tab=contract">Contract</a> • 
+        <a class="hover:underline" href="https://leantoken.org/docs">Docs</a></p>
+    </div>
+    
+
   </div>
 </main>
